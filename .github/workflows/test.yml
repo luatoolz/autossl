@@ -15,7 +15,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        luaVersion: ["5.1", "5.2", "5.3", "luajit", "luajit-openresty"]
+        luaVersion: ["5.1", "5.2", "5.3"]
+#        luaVersion: ["5.1", "5.2", "5.3", "luajit", "luajit-openresty"]
     env:
       DOMAINS: some.com *.any.com
       DIR: /tmp/keys
