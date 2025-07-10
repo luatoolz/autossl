@@ -42,8 +42,6 @@ return {
       storage_adapter = "file",
       challenge_start_delay = 1,
       enabled_challenge_handlers = { 'http-01'},
---      domain_key_types = { 'rsa', 'ecc' },
---      blocking = true,
     }
     self.var = self.var or {
       staging = function(st)
