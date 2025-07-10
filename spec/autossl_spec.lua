@@ -1,0 +1,16 @@
+describe("autossl", function()
+  local autossl
+  setup(function()
+    autossl = require "autossl"
+    os.execute('mkdir -p /tmp/keys')
+  end)
+  it("positive", function()
+    local config = autossl:config()
+    assert.is_true(config.tos_accepted)
+    assert.equal('file', config.storage_adapter)
+    assert.is_true(config.staging)
+    assert.is_true(config.domain_whitelist['some.com'])
+    assert.equal('root@some.com', config.account_email)
+    assert.equal('/tmp/keys/account.key', config.account_key_path)
+  end)
+end)
