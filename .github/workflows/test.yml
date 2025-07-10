@@ -21,7 +21,7 @@ jobs:
       DIR: /tmp/keys
       STAGING: 1
       DEV: --dev
-      SYSDEPS:
+      SYSDEPS: openssl openssl-dev
       ROCKSPEC: ${{ github.event.repository.name }}-scm-0.rockspec
     steps:
     - uses: actions/checkout@master

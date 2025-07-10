@@ -20,6 +20,7 @@ multidomain nginx+lua+resty.asme.autossl env autoconfig
 dependencies = {
   "lua >= 5.1",
   "lua-resty-acme",
+  "luaossl",
 }
 
 test_dependencies = {
