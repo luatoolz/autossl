@@ -65,7 +65,16 @@ return {
       end,
       account_email = function(host, name) return string.format('%s@%s', name or 'root', host or self.hostname()) end,
     }
+    local tocopy = type(r)~='nil'
     r = r or self.conf
+    if tocopy then
+      for k,v in pairs(self.conf) do
+        if type(r[k])=='nil' then
+          r[k]=v
+        end
+      end
+    end
+
     r.storage_config      = r.storage_config or {}
     r.storage_config.dir  = r.storage_config.dir or self.var.dir()
     r.staging             = r.staging or self.var.staging()
