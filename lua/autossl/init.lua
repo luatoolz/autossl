@@ -51,7 +51,7 @@ return {
       host = function(alt) return env.host or alt or self.hostname() end,
       dir = function() return env.dir or '/etc/keys' end,
       expire = function() return env.expire_days or '365' end,
-      domain_whitelist = function(v) return self.domains(v or env.domains) or self.hostname() or {} end,
+      domain_whitelist = function(v) return self.domains(v or env.domains) or {self.hostname()} or {} end,
       account_key_path = function(dir, name, content)
         name = name or 'account.key'
         local p = dir .. '/' .. name
@@ -80,7 +80,7 @@ return {
     r.staging             = r.staging or self.var.staging()
 
     r.account_key_path    = r.account_key_path or self.var.account_key_path(r.storage_config.dir)
-    r.domain_whitelist    = r.domain_whitelist or self.var.domain_whitelist()
+    r.domain_whitelist    = r.domain_whitelist or self.var.domain_whitelist(r.domains)
     r.account_email       = r.account_email or self.var.account_email(r.domain_whitelist[1])
     return r
   end,
