@@ -20,14 +20,26 @@ return {
   domains = function(v)
     if not v then return nil end
     local dom = {}
-    for dd in string.gmatch(v, '[^%s%:%,%;]+') do
-      for _,d in ipairs({maskdomains(dd)}) do
-        if not dom[d] then
-          dom[d]=true; table.insert(dom,d)
+
+    if type(v)=='string' then
+      for dd in string.gmatch(v, '[^%s%:%,%;]+') do
+        for _,d in ipairs({maskdomains(dd)}) do
+          if not dom[d] then
+            dom[d]=true; table.insert(dom,d)
+          end
         end
       end
     end
-    return #dom>0 and dom or nil
+    if type(v)=='table' then
+      for _,dd in ipairs(v) do
+        for _,d in ipairs({maskdomains(dd)}) do
+          if not dom[d] then
+            dom[d]=true; table.insert(dom,d)
+          end
+        end
+      end
+    end
+    return (dom and (#dom>0)) and dom or nil
   end,
   valid = function(d)
     d = d or {}
