@@ -63,7 +63,7 @@ return {
       host = function(alt) return env.host or alt or self.hostname() end,
       dir = function() return env.dir or '/etc/keys' end,
       expire = function() return env.expire_days or '365' end,
-      domain_whitelist = function(v) return self.domains(v or env.domains) or {self.hostname()} or {} end,
+      domain_whitelist = function(v) return self.domains(v or env.domains or self.hostname()) or {} end,
       account_key_path = function(dir, name, content)
         name = name or 'account.key'
         local p = dir .. '/' .. name
@@ -71,8 +71,10 @@ return {
         if rr then rr:close(); return p end
         content = content or env.account_key or self.rsakey(4096)
         local w = io.open(p, 'w')
-        w:write(content)
-        w:close()
+        if not w then ngx.log(ngx.ERR, 'open write '..p..' failed') else
+          if not w:write(content) then ngx.log(ngx.ERR, 'write '..p..' failed') end
+          w:close()
+        end
         return p
       end,
       account_email = function(host, name) return string.format('%s@%s', name or 'root', host or self.hostname()) end,
